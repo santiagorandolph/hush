@@ -1,0 +1,52 @@
+{
+  "name": "hush-desktop",
+  "productName": "HUSH",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hold Until Something Helps \u2014 a local-first journal with a shelf life",
+  "author": "Santiago Randolph",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test.js",
+    "test:desktop": "node desktop/smoke.cjs",
+    "build:icon": "node scripts/icon.cjs",
+    "pack:mac": "npm run build:icon && electron-builder --mac --dir",
+    "dist:mac": "npm run build:icon && electron-builder --mac zip --arm64 --x64"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.0",
+    "playwright": "1.64.1",
+    "sharp": "0.35.5"
+  },
+  "build": {
+    "appId": "com.santiagorandolph.hush",
+    "productName": "HUSH",
+    "asar": true,
+    "files": [
+      "desktop/main.cjs",
+      "index.html",
+      "styles.css",
+      "engine.js",
+      "example.js",
+      "ai.js",
+      "app.js",
+      "favicon.svg"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "mac": {
+      "category": "public.app-category.lifestyle",
+      "icon": "build/icon.png",
+      "minimumSystemVersion": "12.0",
+      "target": [
+        "zip"
+      ],
+      "identity": "-"
+    },
+    "artifactName": "HUSH-${version}-mac-${arch}.${ext}"
+  }
+}
