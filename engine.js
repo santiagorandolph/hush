@@ -1,5 +1,5 @@
 /*
- * Ember — pure decay and distillation logic.
+ * HUSH — pure decay and distillation logic.
  *
  * An entry has a body with a shelf life. When the shelf life ends, the body is
  * deleted for real; the lessons remain. No DOM, no network, so the rules can be
@@ -245,7 +245,7 @@
 
   function exportPayload(entries, now) {
     return JSON.stringify({
-      app: 'ember',
+      app: 'hush',
       version: 1,
       exportedAt: new Date(now || Date.now()).toISOString(),
       entries: entries.map(function (entry) {
@@ -264,7 +264,7 @@
     }, null, 2);
   }
 
-  var EmberEngine = {
+  var HushEngine = {
     SPANS: SPANS,
     spanInfo: spanInfo,
     spanMs: spanMs,
@@ -286,8 +286,8 @@
     exportPayload: exportPayload
   };
 
-  root.EmberEngine = EmberEngine;
+  root.HushEngine = HushEngine;
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = EmberEngine;
+    module.exports = HushEngine;
   }
 })(typeof globalThis !== 'undefined' ? globalThis : this);

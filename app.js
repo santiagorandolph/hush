@@ -1,11 +1,12 @@
 (function () {
   'use strict';
 
-  var Engine = window.EmberEngine;
-  var AI = window.EmberAI;
+  var Engine = window.HushEngine;
+  var AI = window.HushAI;
   var $ = function (id) { return document.getElementById(id); };
 
-  var ENTRIES_KEY = 'ember:entries:v1';
+  var ENTRIES_KEY = 'hush:entries:v1';
+  var LEGACY_ENTRIES_KEY = 'ember:entries:v1';
   var MIN_BODY = 20;
 
   var state = {
@@ -159,7 +160,19 @@
   function loadEntries() {
     var raw = null;
     try {
-      raw = JSON.parse(localStorage.getItem(ENTRIES_KEY) || '[]');
+      var stored = localStorage.getItem(ENTRIES_KEY);
+      if (!stored) {
+        var legacy = localStorage.getItem(LEGACY_ENTRIES_KEY);
+        if (legacy) {
+          stored = legacy;
+          try {
+            localStorage.setItem(ENTRIES_KEY, legacy);
+          } catch (writeErr) {
+            // If the copy fails, still read the old archive for this session.
+          }
+        }
+      }
+      raw = JSON.parse(stored || '[]');
     } catch (err) {
       raw = null;
     }
@@ -808,7 +821,7 @@
   /* ------------------------------------------------------------- samples */
 
   function loadSamples() {
-    var samples = window.buildEmberExample(Date.now());
+    var samples = window.buildHushExample(Date.now());
     var existing = {};
     state.entries.forEach(function (entry) { existing[entry.id] = true; });
 
@@ -961,7 +974,7 @@
     var link = document.createElement('a');
     var stamp = new Date().toISOString().slice(0, 10);
     link.href = url;
-    link.download = 'ember-journal-' + stamp + '.json';
+    link.download = 'hush-journal-' + stamp + '.json';
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -1073,7 +1086,7 @@
 
   function init() {
     if (!Engine || !AI) {
-      toast('Ember failed to load. Reload the page.');
+      toast('HUSH failed to load. Reload the page.');
       return;
     }
 

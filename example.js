@@ -8,7 +8,7 @@
   function buildExampleEntries(now) {
     var DAY = 86400000;
     var current = Number(now) || Date.now();
-    var Engine = root.EmberEngine;
+    var Engine = root.HushEngine;
 
     return [
       Engine.makeEntry({
@@ -77,7 +77,7 @@
     ];
   }
 
-  root.buildEmberExample = buildExampleEntries;
+  root.buildHushExample = buildExampleEntries;
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { buildExampleEntries: buildExampleEntries };
   }

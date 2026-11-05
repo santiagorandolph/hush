@@ -1,22 +1,26 @@
-# Ember
+# HUSH
 
-**A journal with a shelf life. Keep the lesson, let the rest go.**
+**Hold Until Something Helps.**
 
-Write what happened. Ember distills the durable lesson with a local language model,
-then lets the raw entry fade. When the memory window closes, the body is deleted
-from `localStorage` for good. The lesson stays.
+A journal with a shelf life. Write what happened. HUSH distills the durable
+lesson with a local language model, then lets the raw entry fade. When the memory
+window closes, the body is deleted from `localStorage` for good. The lesson stays.
 
-[Live demo](https://santiagorandolph.github.io/ember/) · try **Try a sample journal**;
+[Live demo](https://santiagorandolph.github.io/hush/) · try **Try a sample journal**;
 no model needed.
 
-![Ember archive](preview.png)
+![HUSH archive](preview.png)
 
 ## Why this exists
 
 Journals usually fail in one of two directions. They become a museum of old
 feelings, or they become a performance for a future self who never reads them.
-Ember makes forgetting the point. You get the value of writing something down
+HUSH makes forgetting the point. You get the value of writing something down
 without keeping a permanent record of a day that has already done its job.
+
+The name is the rule: **H**old **U**ntil **S**omething **H**elps. Keep an entry
+while it is useful. When the details stop helping, let them go and keep only what
+does.
 
 The interaction is not a chatbot. It is a document that visibly decays, a button
 that deletes the raw text, and a growing archive of things you actually learned.
@@ -92,7 +96,7 @@ The model receives the entry and returns:
 ```
 
 The prompt asks for first-person, concrete lessons under 150 characters. It
-forbids summarizing events, generic advice, and therapy-speak. Ember then:
+forbids summarizing events, generic advice, and therapy-speak. HUSH then:
 
 - strips duplicate and empty lessons
 - caps the result at four lessons
@@ -111,6 +115,16 @@ like a fortune cookie.
 - Export is a local JSON download of whatever remains.
 
 This is not a backup. Clearing site data deletes the archive.
+
+## Renaming and migrations
+
+HUSH was previously called Ember. On first load, existing entries and model
+settings are copied automatically from the old `ember:*` storage keys to the new
+`hush:*` keys. The old keys are left in place so a rollback does not lose
+anything.
+
+New exports identify themselves as `"app": "hush"`. Old Ember exports remain
+readable as plain JSON; HUSH does not include an import screen.
 
 ## Limits
 
@@ -131,7 +145,7 @@ ai.js         Ollama client and distillation prompt
 example.js    curated sample journal with fresh, fading, forgotten states
 app.js        rendering, composer, detail, purge loop
 test.js       Node tests for the engine
-favicon.svg   ember mark
+favicon.svg   flame mark
 ```
 
 ## Tests
@@ -151,5 +165,5 @@ and mobile layouts with no horizontal overflow.
 
 ## A note on the name
 
-It was briefly called Half-Life. **Ember** is better: the fire is out, but
-something warm and useful is still in your hand.
+It began as Half-Life, then Ember. **HUSH** is the one that stuck: the entry is
+held for a while, and only what helps survives.

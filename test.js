@@ -129,7 +129,7 @@ test('counts tags and summarizes the archive', () => {
 test('exports remaining data and not forgotten bodies', () => {
   const entries = buildExampleEntries(NOW);
   const payload = JSON.parse(Engine.exportPayload(entries, NOW));
-  assert.strictEqual(payload.app, 'ember');
+  assert.strictEqual(payload.app, 'hush');
   assert.strictEqual(payload.entries.length, 4);
   const forgotten = payload.entries.find((e) => e.id === 'sample-sunday');
   assert.strictEqual(forgotten.body, null);

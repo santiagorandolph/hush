@@ -1,5 +1,5 @@
 /*
- * Local-model client for Ember.
+ * Local-model client for HUSH.
  *
  * Distillation happens against Ollama on this machine. No API key, no server,
  * no telemetry. If the model is unavailable, the journal still works — you
@@ -8,7 +8,8 @@
 (function (root) {
   'use strict';
 
-  var STORAGE_KEY = 'ember:settings:v1';
+  var STORAGE_KEY = 'hush:settings:v1';
+  var LEGACY_STORAGE_KEY = 'ember:settings:v1';
   var DEFAULTS = {
     endpoint: 'http://localhost:11434',
     model: 'llama3.1:latest'
@@ -40,7 +41,19 @@
   function getSettings() {
     var stored = {};
     try {
-      stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {};
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        var legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+        if (legacy) {
+          raw = legacy;
+          try {
+            localStorage.setItem(STORAGE_KEY, legacy);
+          } catch (writeErr) {
+            // Reading the old settings still works if the copy is refused.
+          }
+        }
+      }
+      stored = JSON.parse(raw || '{}') || {};
     } catch (err) {
       stored = {};
     }
@@ -152,8 +165,8 @@
       { role: 'user', content: user }
     ]);
 
-    var parsed = root.EmberEngine.parseModelJSON(raw);
-    var lessons = root.EmberEngine.sanitizeLessons(parsed.lessons);
+    var parsed = root.HushEngine.parseModelJSON(raw);
+    var lessons = root.HushEngine.sanitizeLessons(parsed.lessons);
     if (!lessons.length) {
       throw new Error("The model didn't find a lesson to keep. Write one yourself — you know what mattered.");
     }
@@ -167,7 +180,7 @@
     };
   }
 
-  root.EmberAI = {
+  root.HushAI = {
     DEFAULTS: DEFAULTS,
     SYSTEM_PROMPT: SYSTEM_PROMPT,
     getSettings: getSettings,
