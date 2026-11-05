@@ -48,9 +48,10 @@ machine can run it. Any Ollama chat model that supports JSON output should work.
 If the model is unavailable, nothing blocks you: write the lesson yourself. The
 archive, decay, and deletion work entirely offline.
 
-The deployed GitHub Pages version may not be allowed to reach a local Ollama
-instance from an HTTPS page. For the full AI flow, run the app locally. The
-sample journal works everywhere.
+GitHub Pages serves this page over HTTPS, and Chrome blocks HTTPS pages from
+calling `localhost`. The hosted demo therefore cannot reach Ollama. For the full
+AI flow, run the app locally. The sample journal and manual lessons work
+everywhere.
 
 ## How the forgetting works
 

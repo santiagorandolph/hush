@@ -516,6 +516,13 @@
     var body = els.entryBody.value.trim();
     if (state.distilling || body.length < MIN_BODY) return;
 
+    if (endpointBlocked(state.settings.endpoint)) {
+      els.distillStatus.hidden = false;
+      els.distillStatus.className = 'distill-status bad';
+      els.distillStatus.textContent = blockedMessage();
+      return;
+    }
+
     state.distilling = true;
     els.distillSpinner.hidden = false;
     els.distillLabel.textContent = 'Distilling…';
@@ -842,6 +849,16 @@
     els.settingsStatus.className = 'settings-status' + (kind ? ' ' + kind : '');
   }
 
+  function endpointBlocked(endpoint) {
+    return window.location.protocol === 'https:' &&
+      !AI.isLocalEndpoint(window.location.href) &&
+      AI.isLocalEndpoint(endpoint);
+  }
+
+  function blockedMessage() {
+    return "This hosted page can't reach Ollama on your computer. Browsers block HTTPS pages from calling localhost. Run the app locally for live AI — you can still write the lesson yourself.";
+  }
+
   function fillModelList(models) {
     els.modelList.replaceChildren();
     models.forEach(function (name) {
@@ -869,6 +886,10 @@
 
   function testConnection() {
     var settings = settingsFromForm();
+    if (endpointBlocked(settings.endpoint)) {
+      setSettingsStatus(blockedMessage(), 'bad');
+      return;
+    }
     els.testBtn.disabled = true;
     els.testBtn.textContent = 'Testing…';
     setSettingsStatus('Contacting ' + settings.endpoint + '…', '');
@@ -904,6 +925,12 @@
   }
 
   function checkAI() {
+    if (endpointBlocked(state.settings.endpoint)) {
+      els.aiChip.dataset.state = 'offline';
+      els.aiLabel.textContent = 'AI: local only';
+      els.aiChip.title = blockedMessage();
+      return;
+    }
     els.aiChip.dataset.state = 'checking';
     els.aiLabel.textContent = 'AI: checking…';
     els.aiChip.title = 'Checking ' + state.settings.endpoint;
