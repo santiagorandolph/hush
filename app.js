@@ -138,8 +138,8 @@
   }
 
   function applyFade(el, progress) {
-    el.style.setProperty('--decay-opacity', String(Math.max(0.55, 1 - progress * 0.38)));
-    el.style.setProperty('--decay-blur', (progress * 0.45).toFixed(2) + 'px');
+    el.style.setProperty('--decay-opacity', String(Math.max(0.42, 1 - progress * 0.58)));
+    el.style.setProperty('--decay-blur', (progress * 0.35).toFixed(2) + 'px');
     if (progress > 0.12) {
       el.classList.add('is-fading');
     } else {

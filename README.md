@@ -35,6 +35,16 @@ python3 -m http.server 8080
 Click **Try a sample journal** to explore the full archive, including a faded
 entry and one whose details are already gone.
 
+## Typography
+
+The interface bundles [Cormorant Garamond](https://github.com/CatharsisFonts/Cormorant)
+for the wordmark, titles, and kept lessons, and
+[DM Sans](https://github.com/googlefonts/dm-fonts) for journal text, buttons,
+and settings. The Latin variable font files and their SIL Open Font License 1.1
+texts live in `fonts/`, so the site and the desktop app render identically
+without a network connection. The CSS names comparable system fonts as
+fallbacks.
+
 ## macOS desktop app
 
 HUSH can also run as a standalone `.app`, with Mac menus and native JSON export.
@@ -145,7 +155,8 @@ readable as plain JSON; HUSH does not include an import screen.
 
 ```
 index.html    structure and copy
-styles.css    paper styling, serif type, decay treatment
+styles.css    paper styling, bundled type, decay treatment
+fonts/        Cormorant Garamond and DM Sans (SIL OFL 1.1)
 engine.js     decay math, purge, lessons, search, export (pure)
 ai.js         Ollama client and distillation prompt
 example.js    curated sample journal with fresh, fading, forgotten states

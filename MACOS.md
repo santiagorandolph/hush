@@ -4,6 +4,11 @@ The desktop app bundles the existing website and Chromium with Electron. It runs
 without Python, Node, a browser, or a web server installed on the destination Mac.
 Ollama is optional and installed separately. The web version is unchanged.
 
+Cormorant Garamond and DM Sans are bundled inside the app under `fonts/`, along
+with their SIL Open Font License texts, so the interface renders its intended
+typography offline. The desktop protocol handler serves those files alongside
+the existing HTML, CSS, and JavaScript allowlist.
+
 ## Build and run
 
 On macOS 12 or newer, install Node.js 24 and the Xcode Command Line Tools, then:
@@ -72,9 +77,11 @@ when it next opens, not by a background service while the app is closed.
 ## Verification
 
 `npm run test:desktop` uses a temporary profile and synthetic text. It checks
-renderer isolation, the asset allowlist, Ollama-compatible GET/POST requests to
-a local mock, saving, persistence across process restarts, forgetting, JSON
-export, and persistence of the forgotten state. It never invokes a real model.
+renderer isolation, the asset allowlist, bundled-font loading over `hush://app`,
+Ollama-compatible GET/POST requests to a local mock, saving, persistence across
+process restarts, forgetting, JSON export, and persistence of the forgotten
+state. It never invokes a real model.
+
 To exercise a packaged app with the same test:
 
 ```sh

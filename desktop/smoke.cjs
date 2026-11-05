@@ -39,6 +39,16 @@ const http = require('node:http');
     assert.equal(await page.evaluate(() => typeof require), 'undefined');
     assert.equal(await page.evaluate(() => location.origin), 'hush://app');
     assert.equal(await page.evaluate(async () => (await fetch('hush://app/package.json')).status), 404);
+    const fonts = await page.evaluate(async () => {
+      await document.fonts.ready;
+      const loaded = [...document.fonts].filter(font => font.status === 'loaded').map(font => font.family);
+      const response = await fetch('hush://app/fonts/cormorant-garamond-latin-wght-normal.woff2');
+      return { loaded, status: response.status, type: response.headers.get('content-type') };
+    });
+    assert.equal(fonts.status, 200);
+    assert.equal(fonts.type, 'font/woff2');
+    assert.ok(fonts.loaded.includes('Cormorant Garamond'));
+    assert.ok(fonts.loaded.includes('DM Sans'));
     await page.click('#settings-btn');
     await page.fill('#endpoint-input', `http://127.0.0.1:${server.address().port}`);
     await page.fill('#model-input', 'smoke-model');
