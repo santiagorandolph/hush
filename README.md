@@ -9,6 +9,8 @@ from `localStorage` for good. The lesson stays.
 [Live demo](https://santiagorandolph.github.io/ember/) · try **Try a sample journal**;
 no model needed.
 
+![Ember archive](preview.png)
+
 ## Why this exists
 
 Journals usually fail in one of two directions. They become a museum of old
