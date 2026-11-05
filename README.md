@@ -35,6 +35,12 @@ python3 -m http.server 8080
 Click **Try a sample journal** to explore the full archive, including a faded
 entry and one whose details are already gone.
 
+## macOS desktop app
+
+HUSH can also run as a standalone `.app`, with Mac menus and native JSON export.
+See [macOS build, installation, storage, and Ollama instructions](MACOS.md).
+The desktop archive is separate from your browser archive.
+
 ## Connect a local model
 
 1. Install [Ollama](https://ollama.com) and pull a model:
