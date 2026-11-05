@@ -16,6 +16,16 @@ const assets = new Map([
   ['engine.js', 'text/javascript'], ['example.js', 'text/javascript'],
   ['ai.js', 'text/javascript'], ['app.js', 'text/javascript'], ['favicon.svg', 'image/svg+xml']
 ]);
+// The interface bundles its fonts so the app renders identically offline.
+const fontFiles = [
+  'cormorant-garamond-latin-wght-normal.woff2',
+  'cormorant-garamond-latin-ext-wght-normal.woff2',
+  'cormorant-garamond-latin-wght-italic.woff2',
+  'cormorant-garamond-latin-ext-wght-italic.woff2',
+  'dm-sans-latin-wght-normal.woff2',
+  'dm-sans-latin-ext-wght-normal.woff2'
+];
+fontFiles.forEach(name => assets.set(`fonts/${name}`, 'font/woff2'));
 let window;
 function createWindow() {
   window = new BrowserWindow({
@@ -54,7 +64,7 @@ if (!app.requestSingleInstanceLock()) {
         return new Response(await fs.readFile(path.join(app.getAppPath(), name)), {
           headers: {
             'Content-Type': assets.get(name),
-            'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http: https:; object-src 'none'; base-uri 'none'; frame-src 'none'; form-action 'none'"
+            'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' http: https:; object-src 'none'; base-uri 'none'; frame-src 'none'; form-action 'none'"
           }
         });
       } catch {

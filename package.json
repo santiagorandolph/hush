@@ -32,7 +32,8 @@
       "example.js",
       "ai.js",
       "app.js",
-      "favicon.svg"
+      "favicon.svg",
+      "fonts/**/*"
     ],
     "directories": {
       "output": "dist",
